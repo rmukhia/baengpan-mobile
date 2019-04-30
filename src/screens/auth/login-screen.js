@@ -75,7 +75,10 @@ class LoginScreen extends React.Component {
         </Header>
         <Grid>
           <Row size={20}>
-            <Content padder contentContainerStyle={styles.centerContainer}>
+            <Content
+              scrollEnabled={false}
+              padder
+              contentContainerStyle={styles.centerContainer}>
               <H1 style={{
                 padding: '10%', marginBottom: '10%', textAlign: 'center', fontWeight: 'bold', fontSize: 35
               }}
@@ -86,6 +89,7 @@ class LoginScreen extends React.Component {
           </Row>
           <Row size={80}>
             <Content
+              scrollEnabled={false}
               contentContainerStyle={{
                 width: '100%',
               }}
@@ -139,7 +143,7 @@ class LoginScreen extends React.Component {
                 <Picker
                   mode="dropdown"
                   style={{ marginTop: 15 }}
-                  iosIcon={<Icon name="ios-arrow-down-outline" />}
+                  iosIcon={<Icon name="arrow-dropdown" />}
                   selectedValue={this.props.locale}
                   onValueChange={(locale) => {
                     setLocalization(locale).then(() => { this.props.setApplicationPropertyAction({ locale }); });
@@ -182,5 +186,7 @@ export default connect(
       CommunitySwitch: state.CommunitySwitch,
     };
   },
-  dispatch => bindActionCreators({ loginAction, loadingAction, setApplicationPropertyAction }, dispatch)
+  dispatch => bindActionCreators({
+    loginAction, loadingAction, setApplicationPropertyAction
+  }, dispatch)
 )(LoginForm);

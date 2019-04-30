@@ -22,7 +22,6 @@ class SettingsScreen extends Component {
   render() {
     return (
       <Container>
-        <Header />
         <Content>
           <ListItem icon onPress={this.logout}>
             <Left>

@@ -1,13 +1,13 @@
 import React from 'react';
-import { createMaterialTopTabNavigator } from 'react-navigation';
+import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 import { Icon } from 'native-base';
-import AllScreen from './all-screen';
-import ProductsScreen from './products-screen';
-import ServicesScreen from './services-screen';
+import MyStoreScreen from './my-store-screen';
+import MyProfileScreen from './my-profile-screen';
+import UploadScreen from './upload-screen';
 
-export default createMaterialTopTabNavigator({
-  Market: {
-    screen: AllScreen,
+const MySectionTabs = createMaterialTopTabNavigator({
+  MyProfile: {
+    screen: MyProfileScreen,
     navigationOptions: {
       tabBarIcon: ({ focused, tintColor }) => (
         <Icon
@@ -16,11 +16,11 @@ export default createMaterialTopTabNavigator({
           active={focused}
         />
       ),
-      tabBarLabel: 'All',
+      tabBarLabel: 'My Profile',
     },
   },
-  Products: {
-    screen: ProductsScreen,
+  MyStore: {
+    screen: MyStoreScreen,
     navigationOptions: {
       tabBarIcon: ({ focused, tintColor }) => (
         <Icon
@@ -29,25 +29,12 @@ export default createMaterialTopTabNavigator({
           active={focused}
         />
       ),
-      tabBarLabel: 'Products',
-    },
-  },
-  Services: {
-    screen: ServicesScreen,
-    navigationOptions: {
-      tabBarIcon: ({ focused, tintColor }) => (
-        <Icon
-          name="hammer"
-          style={{ fontSize: 14, color: tintColor }}
-          active={focused}
-        />
-      ),
-      tabBarLabel: 'Services',
+      tabBarLabel: 'My Store',
     },
   },
 },
 {
-  initialRouteName: 'Market',
+  initialRouteName: 'MyProfile',
   tabBarOptions: {
     // showIcon: true,
     // showLabel: false,
@@ -68,4 +55,12 @@ export default createMaterialTopTabNavigator({
     inactiveTintColor: '#aaa',
     allowFontScaling: true,
   },
+});
+
+export default createStackNavigator({
+  MySectionTabs,
+  UploadScreen,
+}, {
+  initialRouteName: 'MySectionTabs',
+  headerMode: 'none',
 });

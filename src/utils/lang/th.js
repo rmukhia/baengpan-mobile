@@ -113,4 +113,6 @@ export default {
   quantity: 'Quantity',
   seller: 'Seller',
   description: 'Description',
+  myStore: 'My Store',
+  addToStore: 'Add To Store',
 };

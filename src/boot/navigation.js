@@ -1,44 +1,96 @@
 import React from 'react';
 import {
-  createSwitchNavigator,
-  createAppContainer, createBottomTabNavigator,
+  createSwitchNavigator, createAppContainer, createStackNavigator,
 } from 'react-navigation';
-import { Icon } from 'native-base';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import { Icon, Header } from 'native-base';
 // Load screen
 import LoadAppScreen from './load-app';
 // Auth screens
 import AuthStack from '../screens/auth';
+// Custom header for app screens
+import MainHeader from '../component/main-header-component';
 // App screens
 import HomeScreen from '../screens/app/home-screen';
 
-import MarketStack from '../screens/app/market';
+import MarketTabs from '../screens/app/market';
+
+import MySectionTabs from '../screens/app/my-section';
 
 import SettingsStack from '../screens/app/settings';
 
 
 // App stacks, the structure of app is defined here
-const AppTabs = createBottomTabNavigator({
-  Home: {
-    screen: HomeScreen,
+const AppTabs = createMaterialBottomTabNavigator({
+  Market: {
+    screen: MarketTabs,
     navigationOptions: {
-      tabBarIcon: ({ focused, tintColor }) => <Icon name="home" color={tintColor} active={focused} />,
+      tabBarIcon: ({ focused, tintColor }) => (
+        <Icon
+          name="cart"
+          style={{ color: tintColor }}
+          active={focused}
+        />
+      ),
     },
   },
-  Market: {
-    screen: MarketStack,
+  Hub: {
+    screen: HomeScreen,
     navigationOptions: {
-      tabBarIcon: ({ focused, tintColor }) => <Icon name="cart" color={tintColor} active={focused} />,
+      tabBarIcon: ({ focused, tintColor }) => (
+        <Icon
+          name="contacts"
+          style={{ color: tintColor }}
+          active={focused}
+        />
+      ),
+    },
+  },
+  Me: {
+    screen: MySectionTabs,
+    navigationOptions: {
+      tabBarIcon: ({ focused, tintColor }) => (
+        <Icon
+          name="contact"
+          style={{ color: tintColor }}
+          active={focused}
+        />
+      ),
     },
   },
   Settings: {
     screen: SettingsStack,
     navigationOptions: {
-      tabBarIcon: ({ focused, tintColor }) => <Icon name="settings" color={tintColor} active={focused} />,
+      tabBarIcon: ({ focused, tintColor }) => (
+        <Icon
+          name="menu"
+          style={{ color: tintColor }}
+          active={focused}
+        />
+      ),
     },
   },
 },
 {
-  initialRouteName: 'Home',
+  initialRouteName: 'Market',
+  labeled: false,
+  shifting: true,
+  tabBarOptions: {
+    activeTintColor: 'tomato',
+    inactiveTintColor: 'gray',
+  },
+});
+
+/* The reason we are using the navigator is because we need
+* consistent header between tabs */
+const AppSwitch = createStackNavigator({
+  AppTabs,
+},
+{
+  headerMode: 'float',
+  defaultNavigationOptions: {
+    header: (<MainHeader />)
+  }
 });
 
 
@@ -47,7 +99,7 @@ const AppTabs = createBottomTabNavigator({
 export default createAppContainer(createSwitchNavigator({
   LoadAppScreen, // load the app
   AuthStack, // Authentication stack
-  AppTabs, // App stack
+  AppTabs: AppSwitch, // App stack
 },
 {
   initialRouteName: 'LoadAppScreen',

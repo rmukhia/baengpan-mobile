@@ -1,0 +1,41 @@
+[
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/api/login"
+    },
+    "httpResponse": {
+      "headers": {
+            "Content-Type": [ "application/json"]
+       },
+      "body": "{\"token\": \"iamatokenfrommock\" }",
+      "statusCode": 200
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/api/verify"
+    },
+    "httpResponse": {
+      "headers": {
+            "Content-Type": [ "application/json"]
+       },
+      "statusCode": 200,
+      "body": "{\"success\": \"true\" }"
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/api/register"
+    },
+    "httpResponse": {
+      "headers": {
+            "Content-Type": [ "application/json"]
+       },
+      "statusCode": 200,
+      "body": "{\"success\": \"true\", \"token\": \"iamatoken\" }"
+    }
+  }
+]

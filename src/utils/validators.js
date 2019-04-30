@@ -24,7 +24,7 @@ const minLength10 = minLength(10);
 const maxLength10 = maxLength(10);
 const maxLengthNote = maxLength(50);
 
-const validators = {
+export default {
   required,
   email,
   alphaNumeric,
@@ -37,5 +37,3 @@ const validators = {
   maxLength10,
   maxLengthNote,
 };
-
-export default validators;

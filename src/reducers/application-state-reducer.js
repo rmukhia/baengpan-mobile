@@ -7,9 +7,7 @@
 
 const router = {
   // current item for marketplace
-  'MARKET-CURRENT-ITEM': (state, action) => Object.assign({}, state, {
-    marketCurrentItem: action.payload
-  }),
+  'set-application-property-action': (state, action) => Object.assign({}, state, action.payload),
 
   // Loading screen
   'loading-action': (state, action) => Object.assign({}, state, {
@@ -20,6 +18,11 @@ const router = {
   'error-action': (state, action) => Object.assign({}, state, {
     errorString: action.payload,
   }),
+
+  // Set locale (en, th), in the redux store
+  'set-locale': (state, action) => Object.assign({}, state, {
+    locale: action.payload,
+  })
 };
 
 

@@ -1,16 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   Font, AppLoading, Permissions, Notifications
 } from 'expo';
+import { AsyncStorage } from 'react-native';
+import AsyncStorageKeys from '../constants/async-storage-keys';
+// eslint-disable-next-line no-unused-vars
+import i18n, { initializeLocalize } from '../utils/i18n';
+import { setApplicationPropertyAction } from '../actions/applicaiton-state-actions';
+import { setAccountPropertyAction } from '../actions/account-actions';
 
 class LoadAppScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userToken: false,
-    };
-  }
-
   bootstrapAsync = async () => {
     // load fonts
     await Font.loadAsync({
@@ -20,11 +21,16 @@ class LoadAppScreen extends React.Component {
       Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
     });
 
-    // const userToken = await AsyncStorage.getItem('userToken');
-    this.setState({ userToken: false });
+    const locale = await initializeLocalize();
+    this.props.setApplicationPropertyAction({ locale });
+
+    const userToken = await AsyncStorage.getItem(AsyncStorageKeys.USERTOKEN);
+    if (userToken) {
+      this.props.setApplicationPropertyAction({ loggedIn: true });
+      this.props.setAccountPropertyAction({ userToken });
+    }
   };
 
-  // Render any loading content that you like here
   render() {
     return (
       <AppLoading
@@ -32,9 +38,8 @@ class LoadAppScreen extends React.Component {
         onFinish={() => {
           // eslint-disable-next-line no-console
           console.log('<<< BOOT >>> ');
-          this.props.navigation.navigate(this.state.userToken ? 'AppDrawer' : 'AuthStack');
-        }
-        }
+          this.props.navigation.navigate(this.props.loggedIn ? 'AppTabs' : 'AuthStack');
+        }}
         // eslint-disable-next-line no-console
         onError={console.warn}
       />
@@ -42,4 +47,12 @@ class LoadAppScreen extends React.Component {
   }
 }
 
-export default LoadAppScreen;
+export default connect(
+  state => ({
+    loggedIn: state.application.loggedIn,
+  }),
+  dispatch => bindActionCreators({
+    setAccountPropertyAction,
+    setApplicationPropertyAction
+  }, dispatch),
+)(LoadAppScreen);

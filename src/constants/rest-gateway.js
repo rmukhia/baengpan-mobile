@@ -1,5 +1,6 @@
 /* Contains all the rest api gateways */
 import config from '../../app-config';
+import { getUserToken } from '../utils/store-utils';
 
 const route = [
   {
@@ -28,15 +29,17 @@ const REMOTE = {
 const LOCAL_SMON = 'http://192.168.2.2/smon/';
 const POST_KEY = 'atXl4BvzAatlK9dFj8fWqGqUtTUhGw69NPBWu8VyJEF9eF4UTmgz4SIkK3gJCYkOuLydsLR0WxYsCPIP3LPAWjkX6jnlFRo8ea9e';
 
-
 const API = {
   /* Logs in
    * Params: email, password, pin
    * GET
    */
-  loginApi: () => (`${REMOTE.route}api/login`), // POST
-  registerEmailApi: () => (`${REMOTE.route}api/verify`), // POST
-  registerApi: () => (`${REMOTE.route}api/register`), // POST
+  loginApi: () => (`${REMOTE.route}api/login`), // POST - json
+  registerEmailApi: () => (`${REMOTE.route}api/verify`), // POST -json
+  registerApi: () => (`${REMOTE.route}api/register`), // POST - json
+  uploadToMyStore: () => (`${REMOTE.route}api/market?token=${getUserToken()}`), // POST - multipart/form-data
+  getAllMyStoreItems: () => (`${REMOTE.route}api/market?token=${getUserToken()}&owner=1`), // GET
+  getImageOfItem: item => (`${REMOTE.route}api/item/${item.id}?token=${getUserToken()}&owner=1`) // GET
 };
 
 export {

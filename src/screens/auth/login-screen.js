@@ -13,7 +13,7 @@ import i18n, { setLocalization } from '../../utils/i18n';
 import WrapperContainer from '../../component/wrapper-container-component';
 import FormInputWrapper from '../../component/form-input-wrapper-component';
 import validator from '../../utils/validators';
-import { loadingAction, setApplicationPropertyAction } from '../../actions/applicaiton-state-actions';
+import { setApplicationPropertyAction } from '../../actions/application-state-actions';
 import { loginAction } from '../../actions/account-actions';
 
 
@@ -46,10 +46,8 @@ class LoginScreen extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   submit() {
     if (this.props.valid) {
-      this.props.loadingAction(true);
       this.props.loginAction(this.props.email, this.props.password, this.props.pin)
         .finally(() => {
-          this.props.loadingAction(false);
           this.props.navigation.navigate('AppTabs');
         });
     }
@@ -78,7 +76,8 @@ class LoginScreen extends React.Component {
             <Content
               scrollEnabled={false}
               padder
-              contentContainerStyle={styles.centerContainer}>
+              contentContainerStyle={styles.centerContainer}
+            >
               <H1 style={{
                 padding: '10%', marginBottom: '10%', textAlign: 'center', fontWeight: 'bold', fontSize: 35
               }}
@@ -146,7 +145,9 @@ class LoginScreen extends React.Component {
                   iosIcon={<Icon name="arrow-dropdown" />}
                   selectedValue={this.props.locale}
                   onValueChange={(locale) => {
-                    setLocalization(locale).then(() => { this.props.setApplicationPropertyAction({ locale }); });
+                    setLocalization(locale).then(() => {
+                      this.props.setApplicationPropertyAction({ locale });
+                    });
                   }}
                 >
                   <Picker.Item label="Eng" value="en" />
@@ -187,6 +188,6 @@ export default connect(
     };
   },
   dispatch => bindActionCreators({
-    loginAction, loadingAction, setApplicationPropertyAction
+    loginAction, setApplicationPropertyAction
   }, dispatch)
 )(LoginForm);

@@ -18,8 +18,20 @@ export default (props) => {
       secureText = true;
       iconName = 'key';
       break;
-    default:
+    case 'email':
+    case 'username':
+    case 'firstname':
+    case 'lastname':
       iconName = 'person';
+      break;
+    case 'price':
+      iconName = 'pricetags';
+      break;
+    case 'quantity':
+      iconName = 'stats';
+      break;
+    default:
+      iconName = 'text';
   }
   return (
     <Item error={error && touched}>

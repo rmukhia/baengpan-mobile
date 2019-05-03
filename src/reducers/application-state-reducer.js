@@ -29,6 +29,10 @@ const router = {
 const defaultState = {
   loadingState: false,
   errorString: '',
+  locale: null,
+  loggedIn: false,
+  cameraPermission: false,
+  cameraRollPermission: false,
 };
 
 export default (state = defaultState, action) => {

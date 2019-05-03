@@ -7,7 +7,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { errorAction } from '../actions/applicaiton-state-actions';
+import { errorAction } from '../actions/application-state-actions';
 
 
 class WrapperContainer extends React.Component {

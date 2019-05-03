@@ -10,20 +10,14 @@ import { Field, reduxForm, formValueSelector } from 'redux-form';
 import WrapperContainer from '../../component/wrapper-container-component';
 import FormInputWrapper from '../../component/form-input-wrapper-component';
 import validator from '../../utils/validators';
-import { loadingAction } from '../../actions/applicaiton-state-actions';
 import { registerEmailAction } from '../../actions/account-actions';
 
 class RegisterEmailScreen extends React.Component {
   submit() {
     if (this.props.valid) {
-      this.props.loadingAction(true);
       this.props.registerEmailAction(this.props.email)
         .then(() => {
           this.props.navigation.navigate('RegisterScreen');
-          return Promise.resolve();
-        })
-        .finally(() => {
-          this.props.loadingAction(false);
         });
     }
   }
@@ -92,5 +86,5 @@ export default connect(
       email,
     };
   },
-  dispatch => bindActionCreators({ loadingAction, registerEmailAction }, dispatch),
+  dispatch => bindActionCreators({ registerEmailAction }, dispatch),
 )(RegisterEmailForm);

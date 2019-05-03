@@ -11,7 +11,7 @@ import i18n from '../../utils/i18n';
 import WrapperContainer from '../../component/wrapper-container-component';
 import FormInputWrapper from '../../component/form-input-wrapper-component';
 import validator from '../../utils/validators';
-import { loadingAction, errorAction } from '../../actions/applicaiton-state-actions';
+import { errorAction } from '../../actions/application-state-actions';
 import { registerAction } from '../../actions/account-actions';
 
 class RegisterScreen extends React.Component {
@@ -23,12 +23,7 @@ class RegisterScreen extends React.Component {
 
     if (this.props.valid) {
       if (password === confirmPassword) {
-        this.props.loadingAction(true);
-        this.props.registerAction(email, token, password, firstname, lastname)
-          .then(() => Promise.resolve())
-          .finally(() => {
-            this.props.loadingAction(false);
-          });
+        this.props.registerAction(email, token, password, firstname, lastname);
       } else {
         // do some password not matched error
         this.props.errorAction(i18n.t('alr_err3'));
@@ -153,5 +148,5 @@ export default connect(
       },
     };
   },
-  dispatch => bindActionCreators({ loadingAction, errorAction, registerAction }, dispatch)
+  dispatch => bindActionCreators({ errorAction, registerAction }, dispatch)
 )(RegisterForm);

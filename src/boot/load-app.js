@@ -8,7 +8,7 @@ import { AsyncStorage } from 'react-native';
 import AsyncStorageKeys from '../constants/async-storage-keys';
 // eslint-disable-next-line no-unused-vars
 import i18n, { initializeLocalize } from '../utils/i18n';
-import { setApplicationPropertyAction } from '../actions/applicaiton-state-actions';
+import { setApplicationPropertyAction } from '../actions/application-state-actions';
 import { setAccountPropertyAction } from '../actions/account-actions';
 
 class LoadAppScreen extends React.Component {
@@ -21,9 +21,11 @@ class LoadAppScreen extends React.Component {
       Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
     });
 
+    /* This sets the languauge of the application */
     const locale = await initializeLocalize();
     this.props.setApplicationPropertyAction({ locale });
 
+    /* This sets the user token */
     const userToken = await AsyncStorage.getItem(AsyncStorageKeys.USERTOKEN);
     if (userToken) {
       this.props.setApplicationPropertyAction({ loggedIn: true });

@@ -1,4 +1,4 @@
-/* 
+/*
  * This reducer handles the currently logged in user's state.
 */
 
@@ -8,8 +8,8 @@ const router = {
 };
 
 const defaultState = {
-  loggedIn: false,
   email: null,
+  userToken: null,
 };
 
 export default (state = defaultState, action) => {
